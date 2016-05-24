@@ -143,3 +143,33 @@ record test4 : Set where
   testANDb33 = refl
   testANDb34 : andb3 true true false ≡ false
   testANDb34 = refl
+
+data nat : Set where
+  O : nat
+  S : nat → nat
+
+pred : nat → nat
+pred O = O
+pred (S n) = n
+
+minustwo : nat → nat
+minustwo O = O
+minustwo (S O) = O
+minustwo (S (S n)) = n
+
+evenb : nat → bool
+evenb O = true
+evenb (S O) = false
+evenb (S (S n)) = evenb n
+
+oddb : nat → bool
+oddb n = ¬ evenb n
+
+record test5 : Set where
+  open import Relation.Binary.PropositionalEquality
+
+  test_oddb1 : oddb (S O) ≡ true
+  test_oddb1 = refl
+  test_oddb2 : oddb (S (S (S (S O)))) ≡ false
+  test_oddb2 = refl
+
